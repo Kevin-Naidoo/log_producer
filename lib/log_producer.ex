@@ -7,6 +7,7 @@ defmodule LogProducer do
     @spec generate_random_logs(integer()) :: :ok
     def generate_random_logs(log_count) do
       Telemetry.ReporterState.startClock(:erlang.monotonic_time())
+      Telemetry.ReporterState.restartCount()
       Enum.each(1..log_count, fn _ ->
         random_log_level = Enum.random(@log_levels)
         random_log = generate_random_log()

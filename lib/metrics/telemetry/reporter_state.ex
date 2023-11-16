@@ -13,6 +13,10 @@ defmodule Metrics.Telemetry.ReporterState do
     Agent.update(__MODULE__, fn {count, duration, start_time} -> {count + 1, duration, start_time} end)
   end
 
+  def restartCount do
+    Agent.update(__MODULE__, fn {_count, duration, start_time} -> {0, duration, start_time} end)
+  end
+
   def startClock(time) do
     Agent.update(__MODULE__, fn {count, duration, _start_time} -> {count, duration, time} end)
   end
