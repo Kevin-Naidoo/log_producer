@@ -16,7 +16,8 @@ defmodule Metrics.Telemetry do
 
   defp metrics do
     [
-      counter("metrics.count.value")
+      counter("metrics.count.value"),
+      summary("metrics.duration.value")
     ]
   end
 end

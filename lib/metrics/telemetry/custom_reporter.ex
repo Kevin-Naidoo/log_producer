@@ -27,12 +27,20 @@ defmodule Metrics.Telemetry.CustomReporter do
     |> Enum.map(&handle_metric(&1, measurements, metadata))
   end
 
-  defp handle_metric(%Metrics.Counter{} = metric, _measurements, _metadata) do
+  defp handle_metric(%Metrics.Counter{} = _metric, _measurements, _metadata) do
     ReporterState.increment()
 
-    current_value = ReporterState.value()
+    #{total_requests, total_duration, _start_time} = ReporterState.value()
 
-    IO.puts("Metric: #{metric.__struct__}. Current value: #{current_value}")
+    #IO.puts("Metric: #{metric.__struct__}. total_requests: #{total_requests}, total_duration: #{total_duration}")
+  end
+
+  defp handle_metric(%Metrics.Summary{} = metric, _measurements, _metadata) do
+    ReporterState.elapsedTime()
+
+    {total_requests, total_duration, _start_time} = ReporterState.value()
+
+    IO.puts("Metric: #{metric.__struct__}. total_requests: #{total_requests}, total_duration: #{total_duration} ms")
   end
 
   defp handle_metric(metric, _measurements, _metadata) do

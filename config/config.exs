@@ -1,7 +1,7 @@
 #use Mix.Config
 import Config
 
-config :logger, backends: [ExLogger]
+config :logger, backends: [ExLogger, :console]
 
 config :logger, :console,
   format: "$time [$level] $message $metadata\n",

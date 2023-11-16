@@ -10,6 +10,14 @@ defmodule Metrics.Telemetry.ReporterState do
   end
 
   def increment do
-    Agent.update(__MODULE__, &(&1 + 1))
+    Agent.update(__MODULE__, fn {count, duration, start_time} -> {count + 1, duration, start_time} end)
+  end
+
+  def startClock(time) do
+    Agent.update(__MODULE__, fn {count, duration, _start_time} -> {count, duration, time} end)
+  end
+
+  def elapsedTime do
+    Agent.update(__MODULE__, fn {count, _duration, start_time} -> {count, :erlang.convert_time_unit((:erlang.monotonic_time() - start_time), :nanosecond, :millisecond), start_time} end)
   end
 end

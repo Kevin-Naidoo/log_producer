@@ -3,7 +3,7 @@ defmodule LogProducer.Application do
   #use Application
   def start(_type, _args) do
     children = [
-      {Metrics.Telemetry.ReporterState, 0},
+      {Metrics.Telemetry.ReporterState, {0,0,0}},
       Metrics.Telemetry
     ]
 
