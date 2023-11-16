@@ -24,7 +24,6 @@ defmodule LogProducer do
 
     defp log_with_level(level, message) do
       Logger.log(level, message)
-      IO.puts("Message Logged")
     end
 
     defp generate_random_log() do
