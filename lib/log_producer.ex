@@ -1,6 +1,7 @@
 defmodule LogProducer do
   require Logger
   alias Metrics.Telemetry
+  alias ComplexStruct
 
     @log_levels [:debug, :info, :error]
 
@@ -10,7 +11,7 @@ defmodule LogProducer do
       Telemetry.ReporterState.restartCount()
       Enum.each(1..log_count, fn _ ->
         random_log_level = Enum.random(@log_levels)
-        random_log = generate_random_log()
+        random_log = "#{generate_random_log()} #{inspect(%ComplexStruct{})}"
         log_with_level(random_log_level, random_log)
         Metrics.count()
       end)
@@ -23,16 +24,17 @@ defmodule LogProducer do
     end
 
     defp log_with_level(level, message) do
+
       Logger.log(level, message)
     end
 
     defp generate_random_log() do
       random_messages = [
         "A user submits a form.",
-        "A user completes an action",
-        "A card's content cannot be loaded",
-        "A user's current session",
-        "A system-related error occurs at random",
+        "A user completes an action.",
+        "A card's content cannot be loaded.",
+        "A user's current session.",
+        "A system-related error occurs at random.",
         "A page's content is inaccessible.",
         "A process that the user initiated."
       ]
